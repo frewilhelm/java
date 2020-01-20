@@ -87,24 +87,23 @@ public class NeuralNetwork {
 	 */
 	public static void backpropagation() {
 		Matrix error = output.subtrMatrix(hidden);
-
-		
 		delta = error.multiplMatrix(activationFunc(hidden, "sigmoid", true));
-
-		
 		Matrix weightsDelta = input.transpose().multiplMatrix(delta);
 		weights = weights.sumMatrix(weightsDelta);
-
 	}
 	
 	/**
 	 * Train neural network -> weights
+	 * Store error-history
 	 * @param epochs (amount of repitions)
 	 */
 	public void training(int epochs) {
 		for(int i = 0; i < epochs; i++) {
 			feedForward();
-			backpropagation();			
+			backpropagation();	
+			
+			//errorHistory[i] = ;
+			//epochList[i] = i;
 		}
 		
 		// TODO Maybe add tipping point, when method should stop.
