@@ -16,8 +16,10 @@ public class NeuralNetwork {
 	private static Matrix weights;
 	private static Matrix hidden;
 	private static Matrix delta;
+	private static Matrix error;
 	double[] errorHistory;
 	double[] epochList;
+	
 
 
 	// Constructor		----------------------------------------------------------------------------------------
@@ -86,7 +88,7 @@ public class NeuralNetwork {
 	 * Update weights and biases
 	 */
 	public static void backpropagation() {
-		Matrix error = output.subtrMatrix(hidden);
+		error = output.subtrMatrix(hidden);
 		delta = error.multiplMatrix(activationFunc(hidden, "sigmoid", true));
 		Matrix weightsDelta = input.transpose().multiplMatrix(delta);
 		weights = weights.sumMatrix(weightsDelta);
@@ -98,12 +100,15 @@ public class NeuralNetwork {
 	 * @param epochs (amount of repitions)
 	 */
 	public void training(int epochs) {
+		errorHistory = new double[epochs];
+		epochList = new double[epochs];
 		for(int i = 0; i < epochs; i++) {
 			feedForward();
 			backpropagation();	
 			
-			//errorHistory[i] = ;
-			//epochList[i] = i;
+			error.absMatrix();
+			errorHistory[i] = error.aveMatrix();
+			epochList[i] = i;
 		}
 		
 		// TODO Maybe add tipping point, when method should stop.

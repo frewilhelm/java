@@ -61,5 +61,13 @@ public class Application {
 		
 		Matrix y = NN.predict(exampleMatrix2);
 		y.display(); // Same as in python. check
+		
+	
+		
+		
+		
+		
+		
+		
 	}
 }

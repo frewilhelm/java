@@ -107,13 +107,28 @@ public class Matrix {
 		return transMatrix;
 	}
 	
+	/**
+	 * Gives back the absolute (positive) values of each value in the matrices
+	 */
 	public void absMatrix() {
 		for(int i = 0; i < rows; i++) {
 			for(int j = 0; j < cols; j++) {
-				System.out.println(j);
 				this.matrix[i][j] = Math.abs(matrix[i][j]);
 			}
 		}
+	}
+	
+	public double aveMatrix() {
+		if(cols > 1) {
+			throw new RuntimeException("Method works only for matrices with one column :/ . Sorry!");
+		}
+		
+		double temp = 0; 
+		for(int i = 0; i < rows; i++) {
+			temp = temp + this.matrix[i][0];
+		}
+		
+		return temp/rows;
 	}
 	
 	/**
