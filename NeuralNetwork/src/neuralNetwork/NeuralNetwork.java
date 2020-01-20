@@ -17,8 +17,8 @@ public class NeuralNetwork {
 	private static Matrix hidden;
 	private static Matrix delta;
 	private static Matrix error;
-	double[] errorHistory;
-	double[] epochList;
+	public double[] errorHistory;
+	public double[] epochList;
 	
 
 

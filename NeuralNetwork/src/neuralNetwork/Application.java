@@ -1,5 +1,9 @@
 package neuralNetwork;
 
+import java.awt.*;
+import java.awt.geom.*;
+import javax.swing.*;
+
 /**
  * The application class to start the neural network-function
  * @author fwilhelm92
@@ -7,7 +11,14 @@ package neuralNetwork;
  * @version Java 1.8.0_191-b12
  *
  */
-public class Application {
+public abstract class Application extends JPanel {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public NeuralNetwork NN;
 	
 	/**
 	 * Main function to start the application (driver program)
@@ -62,12 +73,19 @@ public class Application {
 		Matrix y = NN.predict(exampleMatrix2);
 		y.display(); // Same as in python. check
 		
-	
-		
-		
-		
-		
-		
+		// Graphic
+        JFrame f = new JFrame();
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.add(new graphic());
+        f.setSize(800,400);
+        f.setLocation(200,200);
+        f.setVisible(true);
 		
 	}
+
+	
+	
+
+	
+
 }
