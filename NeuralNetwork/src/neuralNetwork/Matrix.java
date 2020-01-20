@@ -1,33 +1,32 @@
 package neuralNetwork;
 
 /**
- * Class for a matrix-data-structure as linked-lists
+ * Class for a matrix-data-structure
  * @author fwilhelm92
  * @IDE Eclipse 2018-09 (4.9.0)
  * @version Java 1.8.0_191-b12
  * @based on https://www.geeksforgeeks.org/construct-linked-list-2d-matrix/
- * @based on https://introcs.cs.princeton.edu/java/95linear/Matrix.java.html
+ * @based on https://introcs.cs.princeton.edu/java/95linear/Matrix.java.html (mainly)
  *
  */
-
 public class Matrix {
 	
 	// Variables		----------------------------------------------------------------------------------------
-	public final int rows;				
-	public final int cols; 				
+	
+	public final int rows;	// NeuralNetwork.java				
+	public final int cols; 	// NeuralNetwork.java					
 	private final double[][] matrix;	
 	
 	// Constructor		----------------------------------------------------------------------------------------
+	
 	/**
 	 * Create matrix from scratch by using number of rows and columns
 	 * @param rows
 	 * @param cols
 	 */
-	public Matrix(int rows, int cols) {
-		
+	public Matrix(int rows, int cols) {		
 		this.rows = rows;
 		this.cols = cols;
-		
 		matrix = new double[rows][cols];
 	}
 	
@@ -47,17 +46,19 @@ public class Matrix {
 		}
 	}
 	
-	private Matrix(Matrix copyMatrix) { // Copy constructor (why?)
-		this(copyMatrix.matrix);
-	}
-	
 	// Getter 			----------------------------------------------------------------------------------------
 	
-	public double[][] asArray() {
-		
+	/**
+	 * Get matrix back as array[][]
+	 * @return array[][]
+	 */
+	public double[][] asArray() {	
 		double[][] array = this.matrix;	
 		return array;
 	}	
+	
+	
+	// Objectmethods	----------------------------------------------------------------------------------------
 	
 	/**
 	 * Swap specific rows and columns in matrix.
@@ -68,6 +69,24 @@ public class Matrix {
 		double[] temp = matrix[row];
 		matrix[row] = matrix[col];
 		matrix[col] = temp;
+	}
+	
+	/**
+	 * Method to display the matrix in a proper way.
+	 */
+	public void display() {
+		for(int i = 0; i < rows; i++) {
+			System.out.print("[");
+			for(int j = 0; j < cols; j++) {
+				if(j < cols - 1) {
+					System.out.print(matrix[i][j] + ", ");
+				}
+				else {
+					System.out.println(matrix[i][j] + "]");
+				}
+			}			
+		}
+		System.out.println();
 	}
 	
 	/**
@@ -87,7 +106,7 @@ public class Matrix {
 	/**
 	 * This method sums a given matrix with another one
 	 * @throws if matrix-dimensions do not correspond in both matrices
-	 * @param matrixB
+	 * @param Matrix, that should be added
 	 * @return new matrix with sum
 	 */
 	public Matrix sumMatrix(Matrix matrixB) {
@@ -107,9 +126,9 @@ public class Matrix {
 	}
 	
 	/**
-	 * This method sums a given matrix with another one
+	 * This method subtraction a given matrix with another one
 	 * @throws if matrix-dimensions do not correspond in both matrices
-	 * @param matrixB
+	 * @param Matrix, that should be subtracted
 	 * @return new matrix with subtracted values
 	 */
 	public Matrix subtrMatrix(Matrix matrixB) {
@@ -129,13 +148,14 @@ public class Matrix {
 	}
 	
 	/**
-	 * This method sums a given matrix with another one
+	 * This method multiplicates a given matrix with another one
 	 * @throws if matrix-dimensions do not correspond in both matrices
-	 * @param matrixB
+	 * @param Matrix, that should be multiplicated by
 	 * @return new matrix with multiplicated values
 	 */
 	public Matrix multiplMatrix(Matrix matrixB) {
 		Matrix matrixA = this;
+		// If only 1-d matrices
 		if(matrixA.cols == matrixB.cols && matrixA.rows == matrixB.rows) { // two 1-d matrices
 			Matrix matrixMultipl = new Matrix(matrixA.rows, 1);
 			for(int i = 0; i < matrixMultipl.rows; i++) {	
@@ -161,25 +181,4 @@ public class Matrix {
 			return matrixMultipl;
 		}
 	}
-	
-	/**
-	 * Method to display the matrix in a proper way. 
-	 */
-	public void display() {
-		for(int i = 0; i < rows; i++) {
-			System.out.print("[");
-			for(int j = 0; j < cols; j++) {
-				if(j < cols - 1) {
-					System.out.print(matrix[i][j] + ", ");
-				}
-				else {
-					System.out.println(matrix[i][j] + "]");
-				}
-			}			
-		}
-		System.out.println();
-	}
-	
-
-
 }

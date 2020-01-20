@@ -1,38 +1,49 @@
 package neuralNetwork;
 
+/**
+ * Class with wich the object neuralNetwork is created
+ * @author fwilhelm92
+ * @IDE Eclipse 2018-09 (4.9.0)
+ * @version Java 1.8.0_191-b12
+ * @based on https://github.com/fwilhelm92/python/blob/master/neuralNetworkWilson.py
+ */
 public class NeuralNetwork {
 	
+	// Variables		----------------------------------------------------------------------------------------
+	
 	private static Matrix input;
-	private static Matrix x;
-	private static Matrix error;
-	private static Matrix hidden;
 	private static Matrix output;
 	private static Matrix weights;
-	
+	private static Matrix hidden;
+	private static Matrix delta;
 	double[] errorHistory;
 	double[] epochList;
-	private static Matrix delta;
 
-	//Matrix matrix;
+
+	// Constructor		----------------------------------------------------------------------------------------
 	
-	public NeuralNetwork(Matrix input, Matrix output, Matrix weights){
-		
+	/**
+	 * Create an object as neural network. Three matrices needed.
+	 * @param input
+	 * @param output
+	 * @param weights
+	 */
+	public NeuralNetwork(Matrix input, Matrix output, Matrix weights){		
 		this.input = input;
-		this.output = output;
-		
+		this.output = output;	
 		this.weights = weights;
-		
 	}
 	
+	// Objectmethods	----------------------------------------------------------------------------------------
 	
 	/**
 	 * The activation function to adjust the weights
 	 * @param function: sigmoid, .. (more to be added)
 	 * @param x: value
-	 * @param derivation: ?
-	 * @return
+	 * @param derivation
+	 * @return outputMatrix as Matrix
 	 */
-	public static Matrix activationFunc(Matrix x,String function, boolean derivation) {
+	public static Matrix activationFunc(Matrix x, String function, boolean derivation) {
 		
 		// Temporary array to get the values
 		double[][] tempArray = x.asArray();
@@ -55,17 +66,25 @@ public class NeuralNetwork {
 				return outputMatrix;
 			}	
 		}
+
+		// TODO add more functions
 		
 		else {
 			throw new RuntimeException("The function name was not defined correctly.");
 		}	
 	}
 	
+	/**
+	 * Calculate predicted output y as hidden matrix
+	 */
 	private static void feedForward() {		
 		// hidden layer
 		hidden = activationFunc(input.multiplMatrix(weights), "sigmoid", false);
 	}
 	
+	/**
+	 * Update weights and biases
+	 */
 	public static void backpropagation() {
 		Matrix error = output.subtrMatrix(hidden);
 
@@ -78,16 +97,26 @@ public class NeuralNetwork {
 
 	}
 	
+	/**
+	 * Train neural network -> weights
+	 * @param epochs (amount of repitions)
+	 */
 	public void training(int epochs) {
 		for(int i = 0; i < epochs; i++) {
 			feedForward();
 			backpropagation();			
 		}
+		
+		// TODO Maybe add tipping point, when method should stop.
 	}
 	
+	/**
+	 * Use trained neural network to predict new data.
+	 * @param newInput
+	 * @return predictions as matrix
+	 */
 	public Matrix predict(Matrix newInput) {	
 		Matrix predictions = activationFunc(newInput.multiplMatrix(weights), "sigmoid", false);	
-		//weights.display();
 		return predictions;
 	}
 
