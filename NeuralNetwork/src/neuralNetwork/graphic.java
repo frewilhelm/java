@@ -4,6 +4,13 @@ import java.awt.*;
 import java.awt.geom.*;
 import javax.swing.*;
 
+/**
+ * 
+ * @author fwilhelm92
+ * @IDE Eclipse 2018-09 (4.9.0)
+ * @version Java 1.8.0_191-b12
+ * @based on https://www.java-forums.org/new-java/7995-how-plot-graph-java-given-samples.html
+ */
 public class graphic extends JPanel {
 	
 	/**
