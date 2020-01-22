@@ -3,11 +3,12 @@ package kMeanAlgorithm;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-import javafx.application.Application;
-import project.Clustering;
-import project.graphProject;
+//import javafx.application.Application;
+//import project.Clustering;
+//import project.graphProject;
 
 /**
  * This class starts the Project
@@ -24,10 +25,7 @@ import project.graphProject;
  *
  */
 public class Application {
-	
-	List<Object[]> stringList = new ArrayList<Object[]>();
-
-	
+		
 	/**
 	 * Reads in a file
 	 * Creates points and centroids as well as begins the clsutering-algorithm
@@ -37,29 +35,33 @@ public class Application {
 	 */
 	public static void main(String[] args) throws IOException {
 		
-		// Initialize a list to store file-parts
-		List<Object[]> stringList = new ArrayList<Object[]>();
+		// Load in files (Files are stored in kMeanAlgorithm\inputFiles)
+		String path = System.getProperty("user.dir"); // Use relative path to project.		
 		
-		/*
-		 * You can choose a file (Files are stored in the workspace in the respective folder!)
-		 */
+		Data numberCSV = new Data(path + "\\inputFiles\\numberCSV.csv");		
+		Data textCSV = new Data(path + "\\inputFiles\\textCSV.csv");		
+		Data numberTxt = new Data(path + "\\inputFiles\\numberTxt.txt"); // One dimensional! NOT for graphic implementation!
+		Data stringsTxt = new Data(path + "\\inputFiles\\stringsTxt.txt");
 		
-		File file = new File("numberCSV.csv");		
-		//File file = new File("textCSV.csv");		
-		//File file = new File("numberTxt.txt"); // One dimensional! NOT for graphic implementation!
-		//File file = new File("stringsTxt.txt");
-		
-		// Read file in
-		File.readFile(file, stringList);
-		
-		
-	}
-		
-		
-		
+		//data = textCSV.readFile("strings");
+		List<Object> numberCSVList = numberCSV.readFile("numbers");
+		List<Object> textCSVList = textCSV.readFile("strings");
+		List<Object> numberTxtList = numberTxt.readFile("numbers");
+		List<Object> stringsTxtList = stringsTxt.readFile("strings");
+
+		System.out.println(numberCSVList);
+		System.out.println(textCSVList);
+		System.out.println(numberTxtList);
+		System.out.println(stringsTxtList);
 		
 		
 		
+		
+		
+
+		
+		
+	}	
 }
 		
 		
