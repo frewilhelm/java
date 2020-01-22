@@ -1,10 +1,10 @@
 package kMeanAlgorithm;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+
+import project.CentroidPoint;
+import project.InterfaceCentroid;
 
 //import javafx.application.Application;
 //import project.Clustering;
@@ -55,7 +55,9 @@ public class Application {
 		System.out.println(stringsTxtList);
 		
 		
-		
+		// Random centroids are chosen. Amount depending on amountOfCentroids
+		List<Interface centroids> centroids = new CentroidPoint();
+		CentroidPoint.randomCentroids(numberCSVList, centroids, 2);
 		
 		
 

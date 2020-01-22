@@ -15,6 +15,7 @@ import java.util.List;
  * @version Java 1.8.0_191-b12
  *
  */
+@SuppressWarnings("serial")
 public class Data extends File {
 
 	private static String fileName;
