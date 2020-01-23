@@ -53,7 +53,7 @@ public class Application {
 		
 		
 		// Random centroids are chosen. Amount depending on amountOfCentroids
-		List<InterfaceCentroid> centroids = CentroidPoint.randomCentroids(numberCSVList, 2);
+		//List<InterfaceCentroid> centroids = CentroidPoint.randomCentroids(numberCSVList, 2);
 		
 		
 
