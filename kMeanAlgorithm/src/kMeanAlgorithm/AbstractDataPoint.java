@@ -1,5 +1,13 @@
 package kMeanAlgorithm;
 
+/**
+ * Abstract class of datapoints in general(?). used in DataPoint.java
+ * 
+ * @author fwilhelm92
+ * @IDE Eclipse 2018-09 (4.9.0)
+ * @version Java 1.8.0_191-b12
+ *
+ */
 public abstract class AbstractDataPoint extends Point implements IFPoint {
 
 	private IFCentroid centroid;
