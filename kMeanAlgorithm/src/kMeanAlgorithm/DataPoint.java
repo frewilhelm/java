@@ -1,5 +1,7 @@
 package kMeanAlgorithm;
 
+import java.util.List;
+
 /**
  * Datastructure of datapoints
  * 
@@ -9,6 +11,8 @@ package kMeanAlgorithm;
  *
  */
 public class DataPoint extends AbstractDataPoint {
+
+	public DataPoint list;
 
 	/**
 	 * Constructor that can contain a various amount of points.
@@ -25,6 +29,18 @@ public class DataPoint extends AbstractDataPoint {
 	public String toString()
 	{
 		return "Point" + super.toString();
+	}
+	
+	/**
+	 * Method that uses a datalist to get Datapoints.
+	 * @param numberCSVList 
+	 * @return datapoints
+	 */
+	public void transfDataPoints(Data numberCSV) {
+		
+		System.out.println(numberCSV);
+		//return this.list;
+		
 	}
 
 }

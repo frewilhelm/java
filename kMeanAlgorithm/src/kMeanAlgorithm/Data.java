@@ -42,11 +42,13 @@ public class Data extends File {
 			System.out.print(".csv data detected");		
 			if(type == "strings") {
 				System.out.println(" and these are strings!");
+				//this.readCSV(path);
 				return readCSV(this);
 			}			
 			if(type == "numbers") {
 				System.out.println(" and these are numbers!");	
 				return readCSV(this);
+				//this.readCSV(path);
 			}			
 			else {
 				throw new RuntimeException("Your data-type is not declared/supported. Add parameters 'strings' or 'numbers' or adjust your data.");
@@ -73,6 +75,12 @@ public class Data extends File {
 		}	
 	}
 	
+	/**
+	 * 
+	 * @param data
+	 * @return
+	 * @throws IOException
+	 */
 	private List<Object> readTxt(Data data) throws IOException {
 		
 		BufferedReader input = new BufferedReader(new FileReader(data)); // Start reader
@@ -101,6 +109,12 @@ public class Data extends File {
 		return list;
 	}
 
+	/**
+	 * 
+	 * @param path
+	 * @return
+	 * @throws IOException
+	 */
 	private List<Object> readCSV(Data data) throws IOException {
 		
 		BufferedReader input = new BufferedReader(new FileReader(data)); // Start reader
