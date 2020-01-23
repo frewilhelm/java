@@ -55,7 +55,14 @@ public class Application {
 		// Random centroids are chosen. Amount depending on amountOfCentroids
 		//List<InterfaceCentroid> centroids = CentroidPoint.randomCentroids(numberCSVList, 2);
 		
-		
+		/*
+		 * TODO
+		 * - Point-Datastructure
+		 * - Datapoints
+		 * - Centroids
+		 * - kMean-Algo
+		 * - similarity-calc
+		 */
 
 		
 		
