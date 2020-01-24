@@ -39,58 +39,30 @@ public class Application {
 		String path = System.getProperty("user.dir") + "\\inputFiles\\numberCSV.csv"; // Use relative path to project.		
 		
 		Data data = new Data(path);
-		DataPoint datapoint = data.readFile("numbers");
-		data.readFile("numbers");
+		//DataPoint datapoint = data.readFile("numbers");
+		//data.readFile("numbers");
 		
 		System.out.println(data);
 		
-		
-		//List<Object> x = data.readFile(path, "numbers");
-		
-		//System.out.println(x);
-		
-		//data.readFile(path + "\\inputFiles\\numberCSV.csv", "numbers");
-		
-		//System.out.println(textCSV);
-				
-				//new Data(path + "\\inputFiles\\numberCSV.csv", "numbers");		
-		//Data textCSV = new Data(path);		
-		//Data numberTxt = new Data(path + "\\inputFiles\\numberTxt.txt"); // One dimensional! NOT for graphic implementation!
-		//Data stringsTxt = new Data(path + "\\inputFiles\\stringsTxt.txt");
-		
-		//data = textCSV.readFile("strings");
-		//Data numberCSVList = numberCSV.readFile("numbers");
-		//List<Object> textCSVList = textCSV.readFile("strings");
-		//List<Object> numberTxtList = numberTxt.readFile("numbers");
-		//List<Object> stringsTxtList = stringsTxt.readFile("strings");
-
-		//System.out.println(numberCSV);
-		
-		//System.out.println(textCSV);
-		//System.out.println(path + "\\inputFiles\\textCSV.csv");
-		
-		
-		//System.out.println(numberCSVList);
-		//System.out.println(textCSVList);
-		//System.out.println(numberTxtList);
-		//System.out.println(stringsTxtList);
-		
-		
-		// Random centroids are chosen. Amount depending on amountOfCentroids
-		//List<InterfaceCentroid> centroids = CentroidPoint.randomCentroids(numberCSVList, 2);
-		
-		// Create method that gets datapoints from list
-		//System.out.println(numberCSV.rows);
-		//datapoints.transfDataPoints(numberCSV);
-		
 		/*
 		 * TODO
-		 * - Point-Datastructure
-		 * - Datapoints
-		 * - Centroids
+		 * - Datastructe for datapoints
+		 *   - Datapoints: Value, Dimensions, Amount of Datapoints, Relate to which centroid
+		 *   - Centroids: Value, Dimensions, Amount of Centroids, Amount of Datapoints
+		 *   
+		 * - Graphic
+		 *   - Interactive GUI
+		 *   - Circle around Centroid; range till datapoint that is the farest.
+		 *   
+		 * - similarity calculation
+		 *   - euclid
+		 *   
 		 * - kMean-Algo
-		 * - similarity-calc
+		 *   - use similarity to assign datapoints to centroids
+		 *   - move centroids to the mid of assigned datapoints
+		 *   - Recursive above until no change in moving centroids occurs
 		 */
+		
 
 		
 		
