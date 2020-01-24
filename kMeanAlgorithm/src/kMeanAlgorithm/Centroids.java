@@ -1,14 +1,16 @@
 package kMeanAlgorithm;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Centroids {
 	
 	public List<Double[]> centroids = new LinkedList<>();
-	private int amCentroids;
+	public int amCentroids;
 	private int dimensions;
 	private String dataName;
+	private int iter;
 	
 	/**
 	 * Constructor of centroids.
@@ -42,6 +44,10 @@ public class Centroids {
 		this.centroids.add(index, upCentroid);		
 	}
 	
+	public Double[] getCentroid(int index) {
+		return this.centroids.get(index);
+	}
+	
 	/**
 	 * Print all centroids.
 	 */
@@ -55,6 +61,14 @@ public class Centroids {
 			System.out.println("]");
 		}	
 		System.out.println();
+	}
+	
+	public String toString() {
+		return this.centroids.toString(); 
+	}
+
+	public Iterator<Double[]> iterator() {
+		return centroids.iterator();
 	}
 
 }

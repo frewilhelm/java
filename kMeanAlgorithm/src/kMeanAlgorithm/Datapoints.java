@@ -63,5 +63,9 @@ public class Datapoints {
 	public void updateAmount() {
 		this.amDatapoints--;
 	}
+	
+	public Iterator<Double[]> iterator() {
+		return datapoints.iterator();
+	}
 
 }

@@ -45,16 +45,10 @@ public class Application {
 		
 		amCentroid = 3; // Amount of centroids
 		centroids = new Centroids(datapoints, amCentroid);
-		centroids.print();
-		datapoints.print();
 		
-		// Test for updating centroids
-		Double[] upCentroid = {1.2, 3.4};
-		centroids.updateCentroids(upCentroid, 2);
+		new Clustering(centroids, datapoints);
 		
-		centroids.print();
-		
-		
+		Something wrong with the euclid-calc?
 		
 		/*
 		 * TODO
