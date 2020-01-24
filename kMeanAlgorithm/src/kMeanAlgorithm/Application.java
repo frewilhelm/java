@@ -23,7 +23,6 @@ import java.util.List;
  */
 public class Application {
 	
-	static DataPoint datapoints;
 	public static Data data;
 		
 	/**
@@ -38,17 +37,19 @@ public class Application {
 		// Load in files (Files are stored in kMeanAlgorithm\inputFiles)
 		String path = System.getProperty("user.dir") + "\\inputFiles\\numberCSV.csv"; // Use relative path to project.		
 		
-		Data data = new Data(path);
-		//DataPoint datapoint = data.readFile("numbers");
-		//data.readFile("numbers");
+		Datapoints data = new Datapoints(path);
 		
-		System.out.println(data);
+		data.print();
 		
 		/*
 		 * TODO
-		 * - Datastructe for datapoints
+		 * - Datastructe for datapoint
 		 *   - Datapoints: Value, Dimensions, Amount of Datapoints, Relate to which centroid
+		 *     - List of doubles[]
+		 *     - Datapoint: double
 		 *   - Centroids: Value, Dimensions, Amount of Centroids, Amount of Datapoints
+		 *     - List of doubles[]
+		 *     - Centroid: double
 		 *   
 		 * - Graphic
 		 *   - Interactive GUI
