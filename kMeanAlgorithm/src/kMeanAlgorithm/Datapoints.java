@@ -19,6 +19,7 @@ public class Datapoints {
 	private Data data;
 	public int amDatapoints;
 	public int dimDatapoints;
+	public String dataName;
 	
 	/**
 	 * Constructor
@@ -29,19 +30,22 @@ public class Datapoints {
 		this.datapoints = data.readFile("numbers");
 		this.amDatapoints = data.rows;
 		this.dimDatapoints = data.dimensions;
+		this.dataName = data.getName();
 	}
 	
 	/**
 	 * Print all datapoints.
 	 */
 	public void print() {	
+		System.out.println("The datapoints (N = " + amDatapoints + ", d = " + dimDatapoints + ") of " + this.dataName + ": ");
 		for(int i = 0; i < amDatapoints; i++) {
 			System.out.print("[" + this.datapoints.get(i)[0]);
 			for(int j = 1; j < dimDatapoints; j++) {
 				System.out.print(", " +this.datapoints.get(i)[j]);
 			}
 			System.out.println("]");
-		}	
+		}
+		System.out.println();
 	}
 	
 	public Double getValues(int row, int dimension) {
@@ -51,10 +55,13 @@ public class Datapoints {
 	public Double[] getDatapoint(int row) {
 		return this.datapoints.get(row);
 	}
-
-
-	public void add(Double[] datapoint) {
-		//datapoints.add(datapoint);
+	
+	public void removeDatapoint(int row) {
+		this.datapoints.remove(row);
+	}
+	
+	public void updateAmount() {
+		this.amDatapoints--;
 	}
 
 }

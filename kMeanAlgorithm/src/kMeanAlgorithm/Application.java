@@ -23,7 +23,9 @@ import java.util.List;
  */
 public class Application {
 	
-	public static Data data;
+	public static Datapoints datapoints;
+	public static Centroids centroids;
+	private static int amCentroid;
 		
 	/**
 	 * Reads in a file
@@ -37,16 +39,29 @@ public class Application {
 		// Load in files (Files are stored in kMeanAlgorithm\inputFiles)
 		String path = System.getProperty("user.dir") + "\\inputFiles\\numberCSV.csv"; // Use relative path to project.		
 		
-		Datapoints data = new Datapoints(path);
+		datapoints = new Datapoints(path);
 		
-		data.print();
+		datapoints.print();
+		
+		amCentroid = 3; // Amount of centroids
+		centroids = new Centroids(datapoints, amCentroid);
+		centroids.print();
+		datapoints.print();
+		
+		// Test for updating centroids
+		Double[] upCentroid = {1.2, 3.4};
+		centroids.updateCentroids(upCentroid, 2);
+		
+		centroids.print();
+		
+		
 		
 		/*
 		 * TODO
 		 * - Datastructe for datapoint
 		 *   - Datapoints: Value, Dimensions, Amount of Datapoints, Relate to which centroid
-		 *     - List of doubles[]
-		 *     - Datapoint: double
+		 *     - List of doubles[][]
+		 *     - Datapoint: double[]; needed to know the relationship to the centroids?
 		 *   - Centroids: Value, Dimensions, Amount of Centroids, Amount of Datapoints
 		 *     - List of doubles[]
 		 *     - Centroid: double
