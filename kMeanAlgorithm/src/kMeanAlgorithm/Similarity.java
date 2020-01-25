@@ -22,13 +22,8 @@ public class Similarity {
 		
 		for(int i = 0; i < datapoint.length(); i++)
 		{
-			Something doesnt work here.
-			compare to results from
-			https://www.calculatorsoup.com/calculators/geometry-plane/distance-two-points.php
 			sum = sum + (Math.pow(datapoint.getValue(i) - centroid.getValue(i),  pValue));
-
 		}
-		
 		return Math.pow(sum, (double)1/pValue);
 	}
 

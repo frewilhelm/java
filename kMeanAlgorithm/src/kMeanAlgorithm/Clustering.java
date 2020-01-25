@@ -48,35 +48,37 @@ public class Clustering {
 		for(int i = 0; i < centroids.amCentroids; i++) {
 			centroid = new Centroid(centroids, i); 
 			for(int j = 0; j < datapoints.amDatapoints; j++) {
+				
 				datapoint = new Datapoint(datapoints, j); 
-				double temp = Similarity.getLpDistance(centroid, datapoint, datapoints.amDatapoints);
 				
-				//Sotre distance to closest centroid! (For later comparison with other centroids)
-				datapoint.setDistance(temp);
-				
-				System.out.println("Distance between " + datapoint.toString() + " and " + centroid.toString() + " is " + temp);
-				break;
-
-
+				if(i == 0) {
+					datapoint.setDistance(Similarity.getLpDistance(centroid, datapoint, datapoints.dimDatapoints)); // Store distance
+					datapoint.centrAssigned = i;
+					printAssignProcess(datapoint, centroid);
+					
+				}
+				else {
+					if(datapoint.distance < Similarity.getLpDistance(centroid, datapoint, datapoints.dimDatapoints)) {
+						datapoint.centrAssigned = i;
+						datapoint.setDistance(Similarity.getLpDistance(centroid, datapoint, datapoints.dimDatapoints));
+						printAssignProcess(datapoint, centroid);
+					}	
+				}
 			}
-			break;
 		}
-
-				
-				
-				
-				
-	
-			
 		
-
-		
-		/*
-		 * Datenpunkt auswählen -> Distanzen berechnen -> zu centroid mit geringster Distanz zuordnen
-		 */
-		
-		
+		// Does not work like it should.... do i need specific centroids??!
+		for(int z = 0; z < centroids.amCentroids; z++) {
+			System.out.println("Centroid " + centroids.getCentroid(z).toString() + " has " + centroids.getCentroid(z).length );
+		}
 		
 	}
+		
+	private void printAssignProcess(Datapoint datapoint, Centroid centroid) {
+		System.out.println("Distance between " + datapoint.toString() + " and " + centroid.toString() + " is " + 
+				(int) datapoint.distance + " and is assigned to centroid: " + datapoint.centrAssigned);
+	}
+
+
 
 }

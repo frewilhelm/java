@@ -26,6 +26,7 @@ public class Application {
 	public static Datapoints datapoints;
 	public static Centroids centroids;
 	private static int amCentroid;
+	private static Double[] datapoint;
 		
 	/**
 	 * Reads in a file
@@ -47,6 +48,7 @@ public class Application {
 		centroids = new Centroids(datapoints, amCentroid);
 		
 		new Clustering(centroids, datapoints);
+
 		
 		//Something wrong with the euclid-calc?
 		
