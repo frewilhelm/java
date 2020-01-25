@@ -5,6 +5,7 @@ public class Datapoint {
 	Double[] datapoint;
 	public int centrAssigned;
 	private int length;
+	public double distance;
 	
 	public Datapoint(Datapoints datapoints, int index) {
 		this.length = datapoints.dimDatapoints;
@@ -21,6 +22,10 @@ public class Datapoint {
 	
 	public double getValue(int index) {
 		return this.datapoint[index];
+	}
+	
+	public void setDistance(double distance) {
+		this.distance = distance;
 	}
 	
 	public void print() {

@@ -45,11 +45,15 @@ public class Clustering {
 		
 		double maxValue = Double.MAX_VALUE;
 		
-		for(int i = 0; i < datapoints.amDatapoints; i++) {
-			datapoint = new Datapoint(datapoints, i); 
-			for(int j = 0; j < centroids.amCentroids; j++) {
-				centroid = new Centroid(centroids, j); 
+		for(int i = 0; i < centroids.amCentroids; i++) {
+			centroid = new Centroid(centroids, i); 
+			for(int j = 0; j < datapoints.amDatapoints; j++) {
+				datapoint = new Datapoint(datapoints, j); 
 				double temp = Similarity.getLpDistance(centroid, datapoint, datapoints.amDatapoints);
+				
+				//Sotre distance to closest centroid! (For later comparison with other centroids)
+				datapoint.setDistance(temp);
+				
 				System.out.println("Distance between " + datapoint.toString() + " and " + centroid.toString() + " is " + temp);
 				break;
 

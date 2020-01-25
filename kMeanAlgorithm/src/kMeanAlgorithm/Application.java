@@ -48,7 +48,7 @@ public class Application {
 		
 		new Clustering(centroids, datapoints);
 		
-		Something wrong with the euclid-calc?
+		//Something wrong with the euclid-calc?
 		
 		/*
 		 * TODO
