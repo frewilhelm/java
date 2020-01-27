@@ -15,7 +15,7 @@ import java.util.*;
  */
 public class Datapoints {
 	
-	public List<Double[]> datapoints;
+	public List<Datapoint> datapoints;
 	private Data data;
 	public int amDatapoints;
 	public int dimDatapoints;
@@ -37,22 +37,12 @@ public class Datapoints {
 	 * Print all datapoints.
 	 */
 	public void print() {	
-		System.out.println("The datapoints (N = " + amDatapoints + ", d = " + dimDatapoints + ") of " + this.dataName + ": ");
 		for(int i = 0; i < amDatapoints; i++) {
-			System.out.print("[" + this.datapoints.get(i)[0]);
-			for(int j = 1; j < dimDatapoints; j++) {
-				System.out.print(", " +this.datapoints.get(i)[j]);
-			}
-			System.out.println("]");
+			datapoints.get(i).print();
 		}
-		System.out.println();
 	}
 	
-	public Double getValues(int row, int dimension) {
-		return this.datapoints.get(row)[dimension];
-	}
-	
-	public Double[] getDatapoint(int row) {
+	public Datapoint getDatapoint(int row) {
 		return this.datapoints.get(row);
 	}
 	
@@ -64,8 +54,8 @@ public class Datapoints {
 		this.amDatapoints--;
 	}
 	
-	public Iterator<Double[]> iterator() {
-		return datapoints.iterator();
+	public void add(Datapoint datapoint) {
+		
 	}
 
 }

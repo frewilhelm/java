@@ -6,10 +6,9 @@ public class Datapoint {
 	public int centrAssigned;
 	private int length;
 	public double distance;
-	
-	public Datapoint(Datapoints datapoints, int index) {
-		this.length = datapoints.dimDatapoints;
-		this.datapoint = datapoints.getDatapoint(index);
+		
+	public Datapoint(Double[] datapoint) {
+		this.datapoint = datapoint;
 	}
 	
 	public void assignToCentroid(int centroidIndex) {
@@ -30,7 +29,7 @@ public class Datapoint {
 	
 	public void print() {
 		System.out.print("[" + this.datapoint[0]);
-		for(int i = 0; i < this.datapoint.length; i++) {
+		for(int i = 1; i < this.datapoint.length; i++) {
 			System.out.print(", " + this.datapoint[i]);
 		}
 		System.out.println("]");

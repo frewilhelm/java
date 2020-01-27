@@ -25,7 +25,8 @@ public class Data extends File {
 	public Datapoints list;
 	private double tempDatapoint;
 	private Double[] tempList;
-	private List<Double[]> datapoints = new LinkedList<>();
+	private List<Datapoint> datapoints = new LinkedList<>();
+	public Datapoint datapoint;
 
 	public Data(String pathname) {
 		super(pathname);
@@ -38,7 +39,7 @@ public class Data extends File {
 	 * @return
 	 * @throws IOException
 	 */
-	public List<Double[]> readFile(String type) throws IOException {
+	public List<Datapoint> readFile(String type) throws IOException {
 		
 		fileName = this.getName(); // Get name of file
 						
@@ -121,7 +122,7 @@ public class Data extends File {
 	 * @return
 	 * @throws IOException
 	 */
-	private List<Double[]> readCSVDoubles(Data data) throws IOException {
+	private List<Datapoint> readCSVDoubles(Data data) throws IOException {
 		
 		BufferedReader input = new BufferedReader(new FileReader(data)); // Start reader
 		String line; // Stores the lines from file
@@ -141,16 +142,14 @@ public class Data extends File {
 				dimensions = i + 1;
 			}
 			
-			//datapoint = new Datapoint(tempList);
-			datapoints.add(tempList);
+			datapoint = new Datapoint(tempList);
+			datapoints.add(datapoint);
 			
 			rows++; // Increments with every line, so we know how many points we have actually
 			
 		}
-		
-		//dimLength = list.size() / rows; // dimensions
-		
-		System.out.println("The file " + fileName + " has " + dimensions + " dimensions and " + rows + " datapoints.\n");
+				
+		System.out.println("The file " + fileName + " has " + dimensions + " dimensions and " + rows + " datapoints.");
 		
 		// close reading
 		input.close();

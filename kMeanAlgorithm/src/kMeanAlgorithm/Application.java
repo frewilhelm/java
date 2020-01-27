@@ -38,19 +38,22 @@ public class Application {
 	public static void main(String[] args) throws IOException {
 		
 		// Load in files (Files are stored in kMeanAlgorithm\inputFiles)
-		String path = System.getProperty("user.dir") + "\\inputFiles\\numberCSV.csv"; // Use relative path to project.		
+		String path = System.getProperty("user.dir") + "\\inputFiles\\numberCSV2.csv"; // Use relative path to project.		
 		
 		datapoints = new Datapoints(path);
 		
-		datapoints.print();
+		//datapoints.print();
 		
 		amCentroid = 3; // Amount of centroids
+		// List of centroids that are randomly picked from datapoints
 		centroids = new Centroids(datapoints, amCentroid);
 		
+		// Start clustering-algo
 		new Clustering(centroids, datapoints);
+		
+		// Not quite the same as in my studies.. but it gets better
 
 		
-		//Something wrong with the euclid-calc?
 		
 		/*
 		 * TODO

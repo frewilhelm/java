@@ -6,11 +6,12 @@ import java.util.List;
 
 public class Centroids {
 	
-	public List<Double[]> centroids = new LinkedList<>();
+	public List<Centroid> centroids = new LinkedList<>();
 	public int amCentroids;
-	private int dimensions;
+	public int dimensions;
 	private String dataName;
-	private int iter;
+	public Centroid centroid;
+	public int centroidNumber;
 	
 	/**
 	 * Constructor of centroids.
@@ -21,54 +22,40 @@ public class Centroids {
 		this.amCentroids = amCentroids;
 		this.dimensions = datapoints.dimDatapoints;
 		this.dataName = datapoints.dataName;
+		this.centroidNumber = 1;
 		
-		for(int i = 0; i < amCentroids; i++) {
+		for(int i = 0; i < this.amCentroids; i++) {
 			
-			int tempCentroid = (int) (Math.random() * datapoints.amDatapoints);
-			this.centroids.add(datapoints.getDatapoint(tempCentroid));
+			int tempCentroid = i; //(int) (Math.random() * datapoints.amDatapoints);
+			Datapoint temp = datapoints.getDatapoint(tempCentroid);
+			centroid = new Centroid(temp, centroidNumber); 	
+			centroids.add(centroid);
 			
 			// remove these centroids from datapoints-list
 			datapoints.removeDatapoint(tempCentroid);
 			// Update amount of rows of datapoints-list
 			datapoints.updateAmount();	
-		}
-	}
-	
-	public void updateCentroids(Double[] upCentroid, int index) {
-		
-		if(index > amCentroids - 1) {
-			throw new RuntimeException("Index > than amount of centroids. There is nothing to update!");	
 			
+			this.centroidNumber++;
 		}
-		this.centroids.remove(index);
-		this.centroids.add(index, upCentroid);		
+		System.out.print(amCentroids + " Centroids were picked:");
+		for(int i = 0; i < this.amCentroids; i++) {
+			System.out.print(this.centroids.get(i).centroid);
+		}
+		System.out.println("\n");
 	}
 	
-	public Double[] getCentroid(int index) {
+	public Centroid getCentroid(int index) {
 		return this.centroids.get(index);
 	}
 	
 	/**
 	 * Print all centroids.
 	 */
-	public void print() {	
+	public void prinOverview() {	
 		System.out.println("The centroids (N = " + amCentroids + ", d = " + dimensions + ") of " + this.dataName + ": ");
 		for(int i = 0; i < amCentroids; i++) {
-			System.out.print("[" + this.centroids.get(i)[0]);
-			for(int j = 1; j < dimensions; j++) {
-				System.out.print(", " +this.centroids.get(i)[j]);
-			}
-			System.out.println("]");
+			System.out.println(this.centroids.get(i).centroid);
 		}	
-		System.out.println();
 	}
-	
-	public String toString() {
-		return this.centroids.toString(); 
-	}
-
-	public Iterator<Double[]> iterator() {
-		return centroids.iterator();
-	}
-
 }

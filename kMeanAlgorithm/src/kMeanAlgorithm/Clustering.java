@@ -1,13 +1,9 @@
 package kMeanAlgorithm;
 
-import java.util.Iterator;
-import java.util.List;
-
 public class Clustering {
 	
-	private Datapoint datapoint;
-	private Centroid centroid;
-
+	private boolean movingCentroids = true;
+	
 	/*
 	public Clustering(Centroids centroids, Datapoints datapoints)
 	{
@@ -33,50 +29,86 @@ public class Clustering {
 	
 	public Clustering(Centroids centroids, Datapoints datapoints) {
 		
-		/*
-		 * Berechne die Distanz zwischen centroid und datapoint. Ordne datapoint dem centroiden mit der geringsten Distanz zu
-		 */
-		
-		assignDatapoints(centroids, datapoints);
-		
+		while(movingCentroids) {
+			assignDatapoints(centroids, datapoints);
+			moveCentroids(centroids);
+			if(movingCentroids == false) {
+				System.out.println("No update to see.. so clustering DONE!");
+				break;
+			}
+		}	
 	}
 	
 	private void assignDatapoints(Centroids centroids, Datapoints datapoints) {
 		
-		double maxValue = Double.MAX_VALUE;
-		
 		for(int i = 0; i < centroids.amCentroids; i++) {
-			centroid = new Centroid(centroids, i); 
 			for(int j = 0; j < datapoints.amDatapoints; j++) {
-				
-				datapoint = new Datapoint(datapoints, j); 
-				
-				if(i == 0) {
-					datapoint.setDistance(Similarity.getLpDistance(centroid, datapoint, datapoints.dimDatapoints)); // Store distance
-					datapoint.centrAssigned = i;
-					printAssignProcess(datapoint, centroid);
+				if(i == 0) { // The lpDistance to the first centroid is the reference point. 
+					datapoints.getDatapoint(j).setDistance(Double.MAX_VALUE);
+				}
+				// Compare to previous lpDistance of datapoints.
+				if(datapoints.getDatapoint(j).distance > Similarity.getLpDistance(centroids.getCentroid(i), datapoints.getDatapoint(j), datapoints.dimDatapoints)) {
 					
+					// refresh possible new distance
+					datapoints.getDatapoint(j).setDistance(Similarity.getLpDistance(centroids.getCentroid(i), datapoints.getDatapoint(j), datapoints.dimDatapoints));
+					printAssignProcess(datapoints.getDatapoint(j), centroids.getCentroid(i));
+
+					if(centroids.getCentroid(i).assignedDatapoints.contains(datapoints.getDatapoint(j))){ // If already in list -> continue
+						continue;
+					}
+					else { // Add datapoint to actual list and remove datapoint, if necessary, from other lists
+						centroids.getCentroid(i).assignDatapoint(datapoints.getDatapoint(j));
+						for(int z = 0; z < centroids.amCentroids; z++) {
+							if(z == i) { // Don't remove from own list
+								continue; 
+							}
+
+							else{
+								if(centroids.getCentroid(z).assignedDatapoints.contains(datapoints.getDatapoint(j))) {
+									centroids.getCentroid(z).assignedDatapoints.remove(datapoints.getDatapoint(j));
+								}
+							}
+						}
+					}
 				}
 				else {
-					if(datapoint.distance < Similarity.getLpDistance(centroid, datapoint, datapoints.dimDatapoints)) {
-						datapoint.centrAssigned = i;
-						datapoint.setDistance(Similarity.getLpDistance(centroid, datapoint, datapoints.dimDatapoints));
-						printAssignProcess(datapoint, centroid);
-					}	
+					continue;
 				}
 			}
 		}
+		// Print results
+		for(int i = 0; i < centroids.amCentroids; i++) {
+			System.out.println("The " + centroids.getCentroid(i).centroidNumber + ". centroid contains " 
+				+ centroids.getCentroid(i).assignedDatapoints.size() + " Datapoints." );
+		}	
+	}
+	
+	private void moveCentroids(Centroids centroids) {
+		System.out.println("----------------------- \nUpdate centroids: ");
 		
-		// Does not work like it should.... do i need specific centroids??!
-		for(int z = 0; z < centroids.amCentroids; z++) {
-			System.out.println("Centroid " + centroids.getCentroid(z).toString() + " has " + centroids.getCentroid(z).length );
+
+		for(int i = 0; i < centroids.amCentroids; i++) {	
+			System.out.print(centroids.getCentroid(i).centroidNumber + ". centroid: " + centroids.getCentroid(i));
+			for(int z = 0; z < centroids.dimensions; z++) {	
+				int sum = 0;
+				double mean = 0;
+				
+				for(int j = 0; j < centroids.getCentroid(i).assignedDatapoints.size(); j++) {
+					sum = (int) (sum + centroids.getCentroid(i).assignedDatapoints.get(j).getValue(z));
+				}
+				mean = sum / centroids.getCentroid(i).assignedDatapoints.size();
+				if(mean == centroids.getCentroid(i).getValue(z)) {
+					movingCentroids = false;
+				}
+				centroids.getCentroid(i).updataCentroid(mean, z);
+			}
+			System.out.println(" --> " + centroids.getCentroid(i));
 		}
-		
 	}
 		
 	private void printAssignProcess(Datapoint datapoint, Centroid centroid) {
 		System.out.println("Distance between " + datapoint.toString() + " and " + centroid.toString() + " is " + 
-				(int) datapoint.distance + " and is assigned to centroid: " + datapoint.centrAssigned);
+				(int) datapoint.distance + " and is assigned to centroid: " + centroid.centroidNumber);
 	}
 
 

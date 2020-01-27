@@ -19,11 +19,12 @@ public class Similarity {
 	public static double getLpDistance(Centroid centroid, Datapoint datapoint, int pValue)
 	{		
 		double sum = 0;
-		
-		for(int i = 0; i < datapoint.length(); i++)
+				
+		for(int i = 0; i < pValue; i++)
 		{
 			sum = sum + (Math.pow(datapoint.getValue(i) - centroid.getValue(i),  pValue));
 		}
+		
 		return Math.pow(sum, (double)1/pValue);
 	}
 
