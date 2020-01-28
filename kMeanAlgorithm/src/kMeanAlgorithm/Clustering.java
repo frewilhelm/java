@@ -3,32 +3,9 @@ package kMeanAlgorithm;
 public class Clustering {
 	
 	private boolean movingCentroids = true;
-	
-	/*
-	public Clustering(Centroids centroids, Datapoints datapoints)
-	{
-		//kMean-algorithm
-		while(centroids.change) { 	// Boolean-check, if moving the centroids make a difference
 		
-			centroids.change = false;
-
-			assignDataPointToCentroids(centroids, datapoints);  // Assigns datapoints to centroids
-
-			if(centroids.change == true)	// If there are assigned datapoints, move the centroid
-			{
-				moveCentroids(centroids);
-			}
-			else	 // If there are no new assigned datapoints the clustering is done
-			{
-				System.out.println("No change!");
-			}
-		}
-		System.out.println("Clustering DONE");
-	}
-	*/
-	
 	public Clustering(Centroids centroids, Datapoints datapoints) {
-		
+				
 		while(movingCentroids) {
 			assignDatapoints(centroids, datapoints);
 			moveCentroids(centroids);
@@ -39,8 +16,7 @@ public class Clustering {
 		}	
 	}
 	
-	private void assignDatapoints(Centroids centroids, Datapoints datapoints) {
-		
+	private void assignDatapoints(Centroids centroids, Datapoints datapoints) {	
 		for(int i = 0; i < centroids.amCentroids; i++) {
 			for(int j = 0; j < datapoints.amDatapoints; j++) {
 				if(i == 0) { // The lpDistance to the first centroid is the reference point. 
@@ -48,7 +24,6 @@ public class Clustering {
 				}
 				// Compare to previous lpDistance of datapoints.
 				if(datapoints.getDatapoint(j).distance > Similarity.getLpDistance(centroids.getCentroid(i), datapoints.getDatapoint(j), datapoints.dimDatapoints)) {
-					
 					// refresh possible new distance
 					datapoints.getDatapoint(j).setDistance(Similarity.getLpDistance(centroids.getCentroid(i), datapoints.getDatapoint(j), datapoints.dimDatapoints));
 					printAssignProcess(datapoints.getDatapoint(j), centroids.getCentroid(i));
@@ -86,11 +61,11 @@ public class Clustering {
 	private void moveCentroids(Centroids centroids) {
 		System.out.println("----------------------- \nUpdate centroids: ");
 		
-
-		for(int i = 0; i < centroids.amCentroids; i++) {	
+		int iter = 0;		
+		for(int i = 0; i < centroids.amCentroids; i++) {
 			System.out.print(centroids.getCentroid(i).centroidNumber + ". centroid: " + centroids.getCentroid(i));
 			for(int z = 0; z < centroids.dimensions; z++) {	
-				int sum = 0;
+				double sum = 0;
 				double mean = 0;
 				
 				for(int j = 0; j < centroids.getCentroid(i).assignedDatapoints.size(); j++) {
@@ -98,12 +73,16 @@ public class Clustering {
 				}
 				mean = sum / centroids.getCentroid(i).assignedDatapoints.size();
 				if(mean == centroids.getCentroid(i).getValue(z)) {
-					movingCentroids = false;
+					iter++;
+					if(iter == centroids.amCentroids * centroids.dimensions) {
+						movingCentroids = false;
+					}
 				}
 				centroids.getCentroid(i).updataCentroid(mean, z);
 			}
 			System.out.println(" --> " + centroids.getCentroid(i));
 		}
+		System.out.println("-----------------------");
 	}
 		
 	private void printAssignProcess(Datapoint datapoint, Centroid centroid) {
