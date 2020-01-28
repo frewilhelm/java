@@ -21,7 +21,7 @@ import java.util.List;
  * @version Java 1.8.0_191-b12
  *
  */
-public class Application {
+public class KMeanAlgorithm {
 	
 	public static Datapoints datapoints;
 	public static Centroids centroids;
