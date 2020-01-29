@@ -9,13 +9,20 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+/**
+ * Class that is launched in Clustering.java to show the centroids, datapoints, and progress.
+ * 
+ * @author fwilhelm92
+ * @IDE Eclipse 2018-09 (4.9.0)
+ * @version Java 1.8.0_191-b12
+ */
 public class Graphic extends Application {
 
 	@Override
 	public void start(Stage stageProject) throws Exception {
 		
+		// Scale is depending on maxValues of the datapoints
 		double scale = 5;
-		
 		if(max(Clustering.maxX) < 50 && max(Clustering.maxY) < 50) {
 			scale = 50;
 		}
@@ -23,22 +30,22 @@ public class Graphic extends Application {
 			scale = 100;
 		}
 		else {
-			scale = 5;
+			scale = 8;
 		}
 	
 		
-
-		int width = (int) (200 + scale * max(Clustering.maxX));
-
-		int height = (int) (200 + scale * max(Clustering.maxY));
+		// Size of Stage is depending on scale 
+		int width = (int) (scale * max(Clustering.maxX));
+		int height = (int) (scale * max(Clustering.maxY));
 		
 		// Create root to add graphical objects
 		Pane root = new Pane();
 		
-		double opacity;
+
 		
 		// Centroids, Lines between changing centroids, ellipses
 		for(int z = 0; z < Clustering.runs; z++) {
+			double opacity; // Opacity to show changes between runs
 			for(int i = 0; i < Clustering.centroidsGraph.get(z).length; i++) { // relates to amount of centroids
 				// Centroids
 				Rectangle rect = new Rectangle();
@@ -46,8 +53,8 @@ public class Graphic extends Application {
 				rect.setY(Clustering.centroidsGraph.get(z)[i][1] * scale);
 				rect.setHeight(10);
 				rect.setWidth(10);
-				opacity = ((double) z / (double) Clustering.runs) + 0.1;
-				if(Clustering.centroidsGraph.get(0).length > ColorScheme.colorScheme.length) {
+				opacity = ((double) z / (double) Clustering.runs);
+				if(Clustering.centroidsGraph.get(0).length > ColorScheme.colorScheme.length) { // If not to many centroids the color-scheme can be used
 					rect.setFill(Color.rgb(228,26,28, opacity));
 				}
 				else {
@@ -85,7 +92,6 @@ public class Graphic extends Application {
 						ellipse.setStroke(Color.rgb(0,0,0, opacity));
 						root.getChildren().add(ellipse);
 					}
-	
 				}*/
 			}
 		}
@@ -98,7 +104,7 @@ public class Graphic extends Application {
 			rect.setY(Clustering.datapointsGraph.getDatapoint(i).getValue(1) * scale);
 			rect.setHeight(5);
 			rect.setWidth(5);
-			if(Clustering.centroidsGraph.get(0).length > ColorScheme.colorScheme.length) {
+			if(Clustering.centroidsGraph.get(0).length > ColorScheme.colorScheme.length) { // If not to many centroids the color-scheme can be used
 				rect.setFill(Color.BLACK);
 			}
 			else {
@@ -109,16 +115,18 @@ public class Graphic extends Application {
 			root.getChildren().add(rect);
 		}	
 		
-
-		
 		// Create the scene with root, width and height
 		Scene scene = new Scene(root, width, height);
-		
-		stageProject.setTitle("Algorithm Animation");
+		stageProject.setTitle("kMean-Algorithm");
 		stageProject.setScene(scene);
 		stageProject.show();
 	}
 	
+	/**
+	 * Function to find the double-max in an array.
+	 * @param array
+	 * @return double - max value from an array
+	 */
 	private double max(Double[] array) {
 		double max = 0;
 		for(int i = 0; i < array.length; i++) {
@@ -129,5 +137,4 @@ public class Graphic extends Application {
 		}
 		return max;
 	}
-
 }

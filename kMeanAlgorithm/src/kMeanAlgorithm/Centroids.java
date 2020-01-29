@@ -13,8 +13,9 @@ public class Centroids {
 	public int centroidNumber;
 	
 	/**
-	 * Constructor of centroids.
-	 * Chooses amount i random centroids of the datapoints-list
+	 * Constructor of Centroids based on datapoints and the chosen amount of centroids. (Usually the centroids are randomly chosen.)
+	 * @param datapoints
+	 * @param amCentroids
 	 */
 	public Centroids(Datapoints datapoints, int amCentroids) {
 		
@@ -23,12 +24,12 @@ public class Centroids {
 		this.dataName = datapoints.dataName;
 		this.centroidNumber = 1;
 		
+		// Loop for amount of centroids that were chosen in KMeanAlgorithm.java
 		for(int i = 0; i < this.amCentroids; i++) {
-			
-			int tempCentroid = (int) (Math.random() * datapoints.amDatapoints);
+			int tempCentroid = (int) (Math.random() * datapoints.amDatapoints); // Random int
 			Datapoint temp = datapoints.getDatapoint(tempCentroid);
-			centroid = new Centroid(temp, centroidNumber); 	
-			centroids.add(centroid);
+			centroid = new Centroid(temp, centroidNumber); // Use Centroid-Constructor
+			centroids.add(centroid); // Add to list of centroids
 			
 			// remove these centroids from datapoints-list
 			datapoints.removeDatapoint(tempCentroid);
@@ -44,12 +45,23 @@ public class Centroids {
 		System.out.println("\n");
 	}
 	
+	/**
+	 * Getter to get given centroid on index
+	 * @param index
+	 * @return Centroid - based on Datapoint (Double[])
+	 */
 	public Centroid getCentroid(int index) {
 		return this.centroids.get(index);
 	}
 	
+	/**
+	 * Transform list of centroids to an array. Used for Graphic.java in Clustering.java
+	 * (In this case, all used centroids are stored to show the change in the graph.)
+	 * @return Double[][] - array with centroids
+	 */
 	public Double[][] toArray() {
-		Double[][] tempList = new Double[this.centroids.size()][this.dimensions];
+		Double[][] tempList = new Double[this.centroids.size()][this.dimensions]; // Array with adequate lengths
+		// store values.
 		for(int i = 0; i < this.centroids.size(); i++) {
 			Double[] tempCentroid = this.centroids.get(i).centroid.datapoint;
 			for(int z = 0; z < this.dimensions; z++) {

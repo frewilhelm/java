@@ -5,13 +5,10 @@ import java.util.*;
 
 /**
  * This defines the datastructure that contains the datapoints of the data
- * - double[][]
- * 
- * 
+ *
  * @author fwilhelm92
  * @IDE Eclipse 2018-09 (4.9.0)
  * @version Java 1.8.0_191-b12
- *
  */
 public class Datapoints {
 	
@@ -22,7 +19,7 @@ public class Datapoints {
 	public String dataName;
 	
 	/**
-	 * Constructor
+	 * Constructor starts the constructor of class Data, by which the data is read and returned as List<Datapoint>
 	 * @throws IOException 
 	 */
 	public Datapoints(String path, String type) throws IOException {
@@ -34,28 +31,26 @@ public class Datapoints {
 	}
 	
 	/**
-	 * Print all datapoints.
+	 * Getter for datapoint in datapoints
+	 * @param index
+	 * @return datapoint - Given datapoint at index
 	 */
-	public void print() {	
-		for(int i = 0; i < amDatapoints; i++) {
-			datapoints.get(i).print();
-		}
+	public Datapoint getDatapoint(int index) {
+		return this.datapoints.get(index);
 	}
 	
-	public Datapoint getDatapoint(int row) {
-		return this.datapoints.get(row);
+	/**
+	 * Remove datapoint in datapoints. (Used to chose random centroids and remove these datapoints from the list.)
+	 * @param index
+	 */
+	public void removeDatapoint(int index) {
+		this.datapoints.remove(index);
 	}
 	
-	public void removeDatapoint(int row) {
-		this.datapoints.remove(row);
-	}
-	
+	/**
+	 * Update amount of datapoints, when random centroids are chosen.
+	 */
 	public void updateAmount() {
 		this.amDatapoints--;
 	}
-	
-	public void add(Datapoint datapoint) {
-		
-	}
-
 }

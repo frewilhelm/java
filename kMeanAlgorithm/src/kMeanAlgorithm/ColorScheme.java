@@ -1,5 +1,12 @@
 package kMeanAlgorithm;
 
+/**
+ * A class that contains different rgb-codes of colors for Graphic.java.
+ * 
+ * @author fwilhelm92
+ * @IDE Eclipse 2018-09 (4.9.0)
+ * @version Java 1.8.0_191-b12
+ */
 public class ColorScheme {
 	
 	public static int[][] colorScheme = 
@@ -9,5 +16,4 @@ public class ColorScheme {
 		 {228,26,28},	// Red
 		 {152,78,163}	// violett
 		 };	
-
 }
