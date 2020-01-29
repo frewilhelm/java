@@ -33,6 +33,28 @@ public class Centroid {
 		return temp;
 	}
 	
+	public double assignedMaxValueX() {
+		double max = 0;
+		for(int i = 0; i < this.assignedDatapoints.size(); i++) {
+			Double temp = this.assignedDatapoints.get(i).datapoint[0];
+			if(max < temp) {
+				max = temp;
+			}
+		}
+		return max;
+	}
+	
+	public double assignedMaxValueY() {
+		double max = 0;
+		for(int i = 0; i < this.assignedDatapoints.size(); i++) {
+			Double temp = this.assignedDatapoints.get(i).datapoint[1];
+			if(max < temp) {
+				max = temp;
+			}
+		}
+		return max;
+	}
+	
 	public void updataCentroid(double mean, int index) {
 		this.centroid.datapoint[index] = mean;
 	}

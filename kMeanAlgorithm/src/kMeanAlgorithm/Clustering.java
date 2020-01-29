@@ -1,19 +1,51 @@
 package kMeanAlgorithm;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import javafx.application.Application;
+
+
 public class Clustering {
 	
 	private boolean movingCentroids = true;
+	public static Datapoints datapointsGraph;
+	public static List<Double[][]> centroidsGraph = new LinkedList<Double[][]>();
+	public static int runs;
+	public static Double[] maxX;
+	public static Double[] maxY;
 		
-	public Clustering(Centroids centroids, Datapoints datapoints) {
-				
+	public Clustering(Centroids centroids, Datapoints datapoints) throws IOException {
+		
+		runs = 0;	
 		while(movingCentroids) {
+			centroidsGraph.add(centroids.toArray());
+			runs++;
 			assignDatapoints(centroids, datapoints);
 			moveCentroids(centroids);
 			if(movingCentroids == false) {
-				System.out.println("No update to see.. so clustering DONE!");
-				break;
+				System.out.println("After " + runs + " runs there are no changes to observe. Clustering Done!");
 			}
 		}	
+		
+		if(centroids.dimensions == 2 && centroids.amCentroids > 1) {
+			maxX = new Double[centroids.amCentroids]; // Max x-value[0] from assigned datapoints per centroid
+			maxY = new Double[centroids.amCentroids]; // Max y-value[1] from assigned datapoints per centroid
+			for(int i = 0; i < centroids.amCentroids; i++) {
+				maxX[i] = centroids.getCentroid(i).assignedMaxValueX();
+				maxY[i] = centroids.getCentroid(i).assignedMaxValueY();
+			}
+			datapointsGraph = datapoints;
+			Application.launch(Graphic.class);
+		}
+		else {
+			System.out.println("A graphical overview over the clustering-process is not possible due to > 2 value-dimensions or < 1 amount of centroids!");
+		}
+		
+		outputResults(centroids, datapoints);
 	}
 	
 	private void assignDatapoints(Centroids centroids, Datapoints datapoints) {	
@@ -26,13 +58,15 @@ public class Clustering {
 				if(datapoints.getDatapoint(j).distance > Similarity.getLpDistance(centroids.getCentroid(i), datapoints.getDatapoint(j), datapoints.dimDatapoints)) {
 					// refresh possible new distance
 					datapoints.getDatapoint(j).setDistance(Similarity.getLpDistance(centroids.getCentroid(i), datapoints.getDatapoint(j), datapoints.dimDatapoints));
-					printAssignProcess(datapoints.getDatapoint(j), centroids.getCentroid(i));
 
 					if(centroids.getCentroid(i).assignedDatapoints.contains(datapoints.getDatapoint(j))){ // If already in list -> continue
 						continue;
 					}
 					else { // Add datapoint to actual list and remove datapoint, if necessary, from other lists
+						printAssignProcess(datapoints.getDatapoint(j), centroids.getCentroid(i));
+
 						centroids.getCentroid(i).assignDatapoint(datapoints.getDatapoint(j));
+						datapoints.getDatapoint(j).assignToCentroid(i);
 						for(int z = 0; z < centroids.amCentroids; z++) {
 							if(z == i) { // Don't remove from own list
 								continue; 
@@ -62,25 +96,43 @@ public class Clustering {
 		System.out.println("----------------------- \nUpdate centroids: ");
 		
 		int iter = 0;		
+		int emptyCentroids = 0;
+		
 		for(int i = 0; i < centroids.amCentroids; i++) {
-			System.out.print(centroids.getCentroid(i).centroidNumber + ". centroid: " + centroids.getCentroid(i));
+			System.out.print(centroids.getCentroid(i).centroidNumber + ". centroid: " + centroids.getCentroid(i));	
+			boolean print = true;
+
 			for(int z = 0; z < centroids.dimensions; z++) {	
+				
 				double sum = 0;
 				double mean = 0;
 				
-				for(int j = 0; j < centroids.getCentroid(i).assignedDatapoints.size(); j++) {
-					sum = (int) (sum + centroids.getCentroid(i).assignedDatapoints.get(j).getValue(z));
+				if(centroids.getCentroid(i).assignedDatapoints.isEmpty()) {
+					mean = centroids.getCentroid(i).getValue(z);	
+					print = false;					
 				}
-				mean = sum / centroids.getCentroid(i).assignedDatapoints.size();
+				else {
+					for(int j = 0; j < centroids.getCentroid(i).assignedDatapoints.size(); j++) {
+						sum = (int) (sum + centroids.getCentroid(i).assignedDatapoints.get(j).getValue(z));
+					}		
+					mean = sum / centroids.getCentroid(i).assignedDatapoints.size();
+				}
 				if(mean == centroids.getCentroid(i).getValue(z)) {
 					iter++;
-					if(iter == centroids.amCentroids * centroids.dimensions) {
+					print = false;
+					if(iter == (centroids.amCentroids - emptyCentroids) * centroids.dimensions) {
 						movingCentroids = false;
 					}
 				}
 				centroids.getCentroid(i).updataCentroid(mean, z);
 			}
-			System.out.println(" --> " + centroids.getCentroid(i));
+			
+			if(print) {
+				System.out.println(" --> " + centroids.getCentroid(i) + " --> Change.");
+			}
+			else {
+				System.out.println(" --> " + centroids.getCentroid(i) + " --> No change.");
+			}
 		}
 		System.out.println("-----------------------");
 	}
@@ -90,6 +142,23 @@ public class Clustering {
 				(int) datapoint.distance + " and is assigned to centroid: " + centroid.centroidNumber);
 	}
 
+	private static void outputResults(Centroids centroids, Datapoints datapoints) throws IOException {
+		// Start writing
+		BufferedWriter output = new BufferedWriter(new FileWriter(System.getProperty("user.dir") + "\\inputFiles\\results.txt"));
+			
+		for(int i = 0; i < centroids.amCentroids; i++) {
+			if(centroids.getCentroid(i).assignedDatapoints.isEmpty()) {
+				output.write("The centroid " + centroids.getCentroid(i).toString() + " has no assigend datapoints.");
+			}
+			else {
+				output.write("The centroid " + centroids.getCentroid(i).toString() + " has the following " + centroids.getCentroid(i).assignedDatapoints.size() + " datapoints assigend to: ");
+				output.write(centroids.getCentroid(i).assignedDatapoints.toString());
+			}
+			output.newLine();
+			
+		}
+		output.close();
 
+	}
 
 }

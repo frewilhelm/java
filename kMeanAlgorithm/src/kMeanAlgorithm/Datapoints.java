@@ -25,9 +25,9 @@ public class Datapoints {
 	 * Constructor
 	 * @throws IOException 
 	 */
-	public Datapoints(String path) throws IOException {
+	public Datapoints(String path, String type) throws IOException {
 		data = new Data(path);
-		this.datapoints = data.readFile("numbers");
+		this.datapoints = data.readFile(type);
 		this.amDatapoints = data.rows;
 		this.dimDatapoints = data.dimensions;
 		this.dataName = data.getName();

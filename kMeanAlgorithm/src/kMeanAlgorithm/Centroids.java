@@ -1,6 +1,5 @@
 package kMeanAlgorithm;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class Centroids {
 		
 		for(int i = 0; i < this.amCentroids; i++) {
 			
-			int tempCentroid = i; //(int) (Math.random() * datapoints.amDatapoints);
+			int tempCentroid = (int) (Math.random() * datapoints.amDatapoints);
 			Datapoint temp = datapoints.getDatapoint(tempCentroid);
 			centroid = new Centroid(temp, centroidNumber); 	
 			centroids.add(centroid);
@@ -47,6 +46,17 @@ public class Centroids {
 	
 	public Centroid getCentroid(int index) {
 		return this.centroids.get(index);
+	}
+	
+	public Double[][] toArray() {
+		Double[][] tempList = new Double[this.centroids.size()][this.dimensions];
+		for(int i = 0; i < this.centroids.size(); i++) {
+			Double[] tempCentroid = this.centroids.get(i).centroid.datapoint;
+			for(int z = 0; z < this.dimensions; z++) {
+				tempList[i][z] = tempCentroid[z];
+			}
+		}
+		return tempList;
 	}
 	
 	/**
