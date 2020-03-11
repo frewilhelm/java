@@ -74,12 +74,12 @@ public abstract class Application extends JPanel {
 		y.display(); // Same as in python. check
 		
 		// Graphic
-        JFrame f = new JFrame();
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.add(new graphic());
-        f.setSize(800,400);
-        f.setLocation(200,200);
-        f.setVisible(true);
+//        JFrame f = new JFrame();
+//        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        f.add(new graphic());
+//        f.setSize(800,400);
+//        f.setLocation(200,200);
+//        f.setVisible(true);
 		
 	}
 
